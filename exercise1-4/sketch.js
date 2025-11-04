@@ -1,5 +1,8 @@
 const KEY_WIDTH = 50;
 const SPACE_BAR_WIDTH = KEY_WIDTH * 3 + 20;
+
+let typedText = "";
+
 let keys = [
     { name: "Q", x: 5, y: 420 }, { name: "W", x: 65, y: 420},
     { name: "E", x: 125, y: 420}, { name: "R", x: 185, y: 420},
@@ -25,6 +28,7 @@ function setup() {
 function draw() {
     background(255);
     drawKeyboard();
+    drawTypedText();
 }
 
 /**
@@ -37,6 +41,21 @@ function drawKeyboard() {
         } else {
             square(k.x, k.y, KEY_WIDTH);
         }
+        textAlign(CENTER, CENTER);
         text(k.name, k.x, k.y, KEY_WIDTH, KEY_WIDTH);
+    }
+}
+
+function drawTypedText() {
+    textAlign(LEFT, CENTER);
+    text(typedText, 30, 350);
+}
+
+function mouseClicked() {
+    for (let k of keys) {
+        let w = (k.name === " ") ? SPACE_BAR_WIDTH : KEY_WIDTH;
+        if (mouseX >= k.x && mouseX <= k.x + w && mouseY >= k.y && mouseY <= k.y + KEY_WIDTH) {
+            typedText += k.name;
+        }
     }
 }
